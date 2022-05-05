@@ -1,0 +1,50 @@
+---
+title: "Thesis-Study-2"
+author: "Fanyi Zeng"
+date: '2022-05-05'
+output: github_document
+---
+
+```{r setup, include=FALSE}
+Study2 <- read.csv("Study 2 Dataset.csv")
+library(tidymodels)
+library(corrplot)
+library('Hmisc')
+```
+
+Attachment avoidance was significantly, positively correlated with attachment anxiety. This shows that the more avoidantly attached an individual is, the more likely that this person is anxiously attached, and vice versa. This also indicates the importance of controlling for the other dimension to predict an outcome.
+
+As predicted, attachment avoidance was negatively, significantly correlated with the probability of using relational savoring,and the perceived effectiveness of using relational savoring. When controlling for attachment anxiety, the above relationships held. As such, the more avoidantly attached individuals are with their close other, the less they may consider using relational savoring strategy or perceive it as adaptive to cope with a recent conflict with their close other.
+
+Contrary to predictions, attachment anxiety was not significantly correlated with the probability of using positive reappraisal, or the perceived effectiveness of using positive reappraisal. When controlling for attachment avoidance, the above relationships held. As such, more anxiously attached individuals might not differ much from less anxiously attached individuals in their consideration and evaluation of using positive reappraisal to cope with a recent conflict with their close other.
+
+
+```{r cor1}
+cor1<-rcorr(as.matrix(Study2[,c(31:36,63,62)]))
+corrplot(cor1$r, type="upper", order="hclust", 
+         p.mat = cor1$p, sig.level = 0.05, insig = "blank")
+```
+
+```{r model1}
+m1 <- lm(PRChoice_Prob ~ Anxiety + Avoidance, Study2)
+summary(m1)
+m2 <- lm(PRChoice_PerEff ~ Anxiety + Avoidance, Study2)
+summary(m2)
+m3 <- lm(RSChoice_Prob ~ Anxiety + Avoidance, Study2)
+summary(m3)
+m4 <- lm(RSChoice_PerEff ~ Anxiety + Avoidance, Study2)
+summary(m4)
+m5 <- lm(PDChoice_Prob ~ Anxiety + Avoidance, Study2)
+summary(m5)
+m6 <- lm(PDChoice_PerEff ~ Anxiety + Avoidance, Study2)
+summary(m6)
+```
+
+I also found that attachment avoidance significantly, positively predicted the choice of positive distraction over relational savoring, when controlling for attachment anxiety.
+
+```{r choice}
+m7 <- lm(ERChoice ~ Anxiety+Avoidance, Study2)
+summary(m7)
+```
+
+Both studies established a strong, negative link between attachment avoidance and relational savoring. Study 1 found that people who were more avoidantly attached in close relationships used significantly less relational savoring to cope with stress from general interpersonal conflicts. Study 2 found that people who were more avoidantly attached with their close others (i.e., in a specific close relationship) rated the use of relational savoring as significantly less likely and less effective to cope with a recent interpersonal conflict with their close others, and they also chose relational savoring significantly less frequently positive distraction. It seems that more avoidantly attached individuals’ aversion to relational savoring is consistent across situations. This is supported by studies that linked attachment avoidance with lower savoring, especially savoring interpersonal events or savoring via social activities, but not those that are non-interpersonal, such as a personal achievement (Borelli et al., 2014; Goodall, 2015; Palmer & Gentzler, 2019). This is also consistent with attachment theory that avoidantly attached individuals admire independence and depreciate interdependence (e.g., Bowlby, 1982; Cassidy & Kobak, 1988; Mikulincer & Shaver, 2003), so they try to eschew anything that might close their distance with others and expose their vulnerabilities. Perhaps, more important than teaching these individuals to use relational savoring is to teach them to overcome the fear of, build the trust in, and improve the skills to healthy relationships.
